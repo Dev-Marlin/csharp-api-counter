@@ -56,6 +56,18 @@ counters.MapGet("/lessthan/{number}", (int number) =>
 //e.g.  with an Id=1  the Books counter Value should be increased from 5 to 6
 //return the counter you have increased
 
+/*counters.MapGet("/increment/{id}", (int id) =>
+{
+    //CounterHelper.Counters.Find(x => x.Id == id).Value++;
+    return TypedResults.Ok(5);//CounterHelper.Counters.Find(x => x.Id == id));
+});*/
+
+counters.MapPut("/increment/{id}", (int id) =>
+{
+    CounterHelper.Counters.Find(x => x.Id == id).Value++;
+    return TypedResults.Ok(CounterHelper.Counters.Find(x => x.Id == id));
+});
+
 //Extension #2
 //TODO: 2. Write a controller method that decrements the Value property of a counter of any given Id.
 //e.g.  with an Id=1  the Books counter Value should be decreased from 5 to 4
