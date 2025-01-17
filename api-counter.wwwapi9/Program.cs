@@ -1,4 +1,5 @@
 using api_counter.wwwapi9.Data;
+using api_counter.wwwapi9.Models;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -56,22 +57,31 @@ counters.MapGet("/lessthan/{number}", (int number) =>
 //e.g.  with an Id=1  the Books counter Value should be increased from 5 to 6
 //return the counter you have increased
 
-/*counters.MapGet("/increment/{id}", (int id) =>
+counters.MapPut("/increment/{id}", (int id) =>
 {
-    //CounterHelper.Counters.Find(x => x.Id == id).Value++;
-    return TypedResults.Ok(5);//CounterHelper.Counters.Find(x => x.Id == id));
-});*/
+    Counter c = CounterHelper.Counters.Find(x => x.Id == id);
+    c.Value++;
+    return TypedResults.Ok(c);
+});
 
+/*
 counters.MapPut("/increment/{id}", (int id) =>
 {
     CounterHelper.Counters.Find(x => x.Id == id).Value++;
     return TypedResults.Ok(CounterHelper.Counters.Find(x => x.Id == id));
-});
+});*/
 
 //Extension #2
 //TODO: 2. Write a controller method that decrements the Value property of a counter of any given Id.
 //e.g.  with an Id=1  the Books counter Value should be decreased from 5 to 4
 //return the counter you have decreased
+
+counters.MapPut("/dencrement/{id}", (int id) =>
+{
+    Counter c = CounterHelper.Counters.Find(x => x.Id == id);
+    c.Value--;
+    return TypedResults.Ok(c);
+});
 
 //Super Optional Extension #1 - Refactor the code!
 // - move the EndPoints into their own class and ensure they are mapped correctly
