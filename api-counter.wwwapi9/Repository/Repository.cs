@@ -1,5 +1,6 @@
 ﻿using api_counter.wwwapi9.Data;
 using api_counter.wwwapi9.Models;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace api_counter.wwwapi9.Repository
 {
@@ -12,14 +13,11 @@ namespace api_counter.wwwapi9.Repository
             return counter;
         }
 
-        public Counter DecrementCounter(int id)
+        public IEnumerable<Counter> Counters()
         {
-            Counter c = CounterHelper.Counters.Find(x => x.Id == id);
-            c.Value--;
-            return c;
+            return CounterHelper.Counters;
         }
-
-        public Counter GetCounter(int id)
+        public Counter GetCounterById(int id)
         {
             Counter c = CounterHelper.Counters.Find(x => x.Id == id);
             return c;
@@ -30,6 +28,23 @@ namespace api_counter.wwwapi9.Repository
             Counter c = CounterHelper.Counters.Find(x => x.Id == id);
             c.Value++;
             return c;
+        }
+
+        public Counter DecrementCounter(int id)
+        {
+            Counter c = CounterHelper.Counters.Find(x => x.Id == id);
+            c.Value--;
+            return c;
+        }
+
+        public IEnumerable<Counter> GreaterThan(int number)
+        {
+            return CounterHelper.Counters.Where(x => x.Value > number);
+        }
+
+        public IEnumerable<Counter> LessThan(int number)
+        {
+            return CounterHelper.Counters.Where(x => x.Value < number);
         }
     }
 }
